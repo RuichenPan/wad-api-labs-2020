@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import './db';
 import {loadUsers} from './seedData'
 import usersRouter from './api/users';
+import userGenres from './api/genres';
 dotenv.config();
 
 const app = express();
@@ -27,6 +28,7 @@ app.use(bodyParser.urlencoded());
 app.use('/api/movies', moviesRouter);
 //Users router
 app.use('/api/users', usersRouter);
+app.use('/api/genres', userGenres);
 app.use(errHandler);
 app.listen(port, () => {
   console.info(`Server running at ${port}`);
