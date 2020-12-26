@@ -8,6 +8,7 @@ import usersRouter from './api/users';
 import userGenres from './api/genres';
 import session from 'express-session';
 import authenticate from './authenticate';
+import passport from './authenticate';
 dotenv.config();
 
 const app = express();
@@ -29,10 +30,11 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
+app.use(passport.initialize())
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-app.use('/api/movies', authenticate, moviesRouter);
+app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesRouter);
 //Users router
 app.use('/api/users', usersRouter);
 app.use('/api/genres', userGenres);
